@@ -46,18 +46,19 @@ function flowLED () {
 }
 function init_all () {
     serial.redirectToUSB()
-    radio.setGroup(90)
     init_sw()
     init_mcp()
+}
+// posは0〜7
+function onLED (pos: number) {
+    LED_bank = read_dig(1)
+    write_dlg(1, 2 ** pos)
 }
 function init_mcp () {
     mcp_devadr = 32
     set_dir(0, 255)
     set_dir(1, 0)
     set_pull(0, 255)
-}
-function send_joy () {
-    radio.sendString("")
 }
 function read_dig (bank2: number) {
     rbank = bank2 + 18
@@ -68,6 +69,9 @@ function read_dig (bank2: number) {
     true
     )
     return pins.i2cReadNumber(mcp_devadr, NumberFormat.UInt8LE, false)
+}
+function offLED (pos: number) {
+	
 }
 function set_pull (bank3: number, data: number) {
     pbank = bank3 + 12
@@ -86,28 +90,31 @@ function set_pull (bank3: number, data: number) {
 }
 let pbank = 0
 let rbank = 0
+let LED_bank = 0
 let wbank = 0
 let mcp_devadr = 0
-let value = 250
-let alternate = 0
 init_all()
 basic.forever(function () {
-	
-})
-basic.forever(function () {
-    if (alternate == 0) {
-        basic.showIcon(IconNames.Happy)
-        alternate += 1
+    if (pins.digitalReadPin(DigitalPin.P13) == 0) {
+        basic.showIcon(IconNames.Giraffe)
     } else {
-        basic.showLeds(`
-            . . . . .
-            . . # . #
-            . . . . .
-            # . . . #
-            . # # # .
-            `)
-        alternate += -1
+        basic.showIcon(IconNames.Diamond)
     }
+    serial.writeLine("joy")
+    serial.writeValue("p1", pins.analogReadPin(AnalogReadWritePin.P1))
+    serial.writeValue("p2", pins.analogReadPin(AnalogReadWritePin.P2))
+    serial.writeLine("sw")
+    serial.writeValue("p0", pins.digitalReadPin(DigitalPin.P0))
+    serial.writeValue("p5", pins.digitalReadPin(DigitalPin.P5))
+    serial.writeValue("p8", pins.digitalReadPin(DigitalPin.P8))
+    serial.writeValue("p11", pins.digitalReadPin(DigitalPin.P11))
+    serial.writeValue("p12", pins.digitalReadPin(DigitalPin.P12))
+    serial.writeValue("p13", pins.digitalReadPin(DigitalPin.P13))
+    serial.writeValue("p14", pins.digitalReadPin(DigitalPin.P14))
+    serial.writeValue("p15", pins.digitalReadPin(DigitalPin.P15))
+    serial.writeValue("p16", pins.digitalReadPin(DigitalPin.P16))
+    serial.writeLine("ioexp")
+    serial.writeValue("b0", read_dig(0))
     basic.pause(500)
 })
 basic.forever(function () {
