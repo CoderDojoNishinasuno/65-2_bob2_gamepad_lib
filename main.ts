@@ -39,10 +39,9 @@ namespace bob2_gamepad {
         )
     }
     function write_dlg(bank: number, data: number) {
-        wbank = bank + 18
         pins.i2cWriteNumber(
             mcp_devadr,
-            wbank,
+            bank + 18,
             NumberFormat.UInt8LE,
             true
         )
@@ -54,20 +53,18 @@ namespace bob2_gamepad {
         )
     }
     function read_dig(bank2: number) {
-        rbank = bank2 + 18
         pins.i2cWriteNumber(
             mcp_devadr,
-            rbank,
+            bank2 + 18,
             NumberFormat.UInt8LE,
             true
         )
         return pins.i2cReadNumber(mcp_devadr, NumberFormat.UInt8LE, false)
     }
     function set_pull(bank3: number, data: number) {
-        pbank = bank3 + 12
         pins.i2cWriteNumber(
             mcp_devadr,
-            pbank,
+            bank3 + 12,
             NumberFormat.UInt8LE,
             true
         )
@@ -184,9 +181,6 @@ namespace bob2_gamepad {
         return( pins.analogReadPin(AnalogReadWritePin.P2) )
     }
 
-    let pbank = 0
-    let rbank = 0
-    let wbank = 0
     let mcp_devadr = 0
     init_all()
     basic.forever(function () {
