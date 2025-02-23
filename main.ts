@@ -20,7 +20,6 @@ namespace bob2_gamepad {
     }
     //% block="はじめにやる"
     export function init_all() {
-        serial.redirectToUSB()
         init_sw()
         init_mcp()
     }
