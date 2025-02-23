@@ -183,35 +183,4 @@ namespace bob2_gamepad {
 
     let mcp_devadr = 0
     init_all()
-    basic.forever(function () {
-        if (pins.digitalReadPin(DigitalPin.P13) == 0) {
-            basic.showIcon(IconNames.Giraffe)
-        } else {
-            basic.showIcon(IconNames.Diamond)
-        }
-        serial.writeLine("joy")
-        serial.writeValue("p1", pins.analogReadPin(AnalogReadWritePin.P1))
-        serial.writeValue("p2", pins.analogReadPin(AnalogReadWritePin.P2))
-        serial.writeLine("sw")
-        serial.writeValue("p0", pins.digitalReadPin(DigitalPin.P0))
-        serial.writeValue("p5", pins.digitalReadPin(DigitalPin.P5))
-        serial.writeValue("p8", pins.digitalReadPin(DigitalPin.P8))
-        serial.writeValue("p11", pins.digitalReadPin(DigitalPin.P11))
-        serial.writeValue("p12", pins.digitalReadPin(DigitalPin.P12))
-        serial.writeValue("p13", pins.digitalReadPin(DigitalPin.P13))
-        serial.writeValue("p14", pins.digitalReadPin(DigitalPin.P14))
-        serial.writeValue("p15", pins.digitalReadPin(DigitalPin.P15))
-        serial.writeValue("p16", pins.digitalReadPin(DigitalPin.P16))
-        serial.writeLine("ioexp")
-        serial.writeValue("b0", read_dig(0))
-        basic.pause(500)
-    })
-    basic.forever(function () {
-        if (pins.digitalReadPin(DigitalPin.P13) < 0.5) {
-            radio.sendNumber(1)
-            basic.showIcon(IconNames.EighthNote)
-            basic.pause(500)
-        }
-        basic.pause(100)
-    })
 }
