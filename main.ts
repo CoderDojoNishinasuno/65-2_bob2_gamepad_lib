@@ -88,7 +88,7 @@ namespace bob2_gamepad {
         // posは0〜7
         let registerValue = read_dig(1);  // 現在のレジスタ値を取得
         let newValue = registerValue | (1 << pos);  // 指定したビットを1にする
-        write_dig(1, newValue);
+        write_dlg(1, newValue);
     }
 
     //% block="LED %pos をけす"
@@ -96,7 +96,7 @@ namespace bob2_gamepad {
         // posは0〜7
         let registerValue = read_dig(1);  // 現在のレジスタ値を取得
         let newValue = registerValue & ~(1 << pos);  // 指定したビットを0にする
-        write_dig(1, newValue);
+        write_dlg(1, newValue);
     }
     //% block="a ボタン"
     export function sw_a() {
