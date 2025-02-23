@@ -38,7 +38,7 @@ namespace bob2_gamepad {
             false
         )
     }
-    function write_dlg(bank: number, data: number) {
+    function write_dig(bank: number, data: number) {
         pins.i2cWriteNumber(
             mcp_devadr,
             bank + 18,
@@ -79,7 +79,7 @@ namespace bob2_gamepad {
     //% block="ながれるLED"
     export function flowLED() {
         for (let カウンター = 0; カウンター <= 7; カウンター++) {
-            write_dlg(1, 2 ** カウンター)
+            write_dig(1, 2 ** カウンター)
             basic.pause(100)
         }
     }
@@ -88,7 +88,7 @@ namespace bob2_gamepad {
         // posは0〜7
         let registerValue = read_dig(1);  // 現在のレジスタ値を取得
         let newValue = registerValue | (1 << pos);  // 指定したビットを1にする
-        write_dlg(1, newValue);
+        write_dig(1, newValue);
     }
 
     //% block="LED %pos をけす"
@@ -96,7 +96,7 @@ namespace bob2_gamepad {
         // posは0〜7
         let registerValue = read_dig(1);  // 現在のレジスタ値を取得
         let newValue = registerValue & ~(1 << pos);  // 指定したビットを0にする
-        write_dlg(1, newValue);
+        write_dig(1, newValue);
     }
     //% block="a ボタン"
     export function sw_a() {
@@ -180,5 +180,5 @@ namespace bob2_gamepad {
     }
 
     let mcp_devadr = 0
-    init_all()
+    //init_all()
 }
